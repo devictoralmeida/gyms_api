@@ -29,10 +29,7 @@ app.register(checkInsRoutes)
 
 app.setErrorHandler((error, request, reply) => {
   if (error instanceof ZodError) {
-    return reply.status(400).send({
-      message: 'Validation error',
-      issues: error.format(),
-    })
+    return reply.status(400).send({ message: error.flatten().fieldErrors })
   }
 
   if (env.NODE_ENV !== 'production') {

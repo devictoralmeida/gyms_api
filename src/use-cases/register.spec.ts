@@ -13,7 +13,7 @@ describe('Register Use Case', () => {
     registerUseCase = new RegisterUseCase(usersRepository)
   })
 
-  it('should be able to register', async () => {
+  it('should be able to register a member without role payload', async () => {
     const { user } = await registerUseCase.execute({
       name: 'Jhon Doe',
       email: 'jhon.doe@gmail.com',
@@ -21,6 +21,19 @@ describe('Register Use Case', () => {
     })
 
     expect(user.id).toEqual(expect.any(String))
+    expect(user.role).toEqual('MEMBER')
+  })
+
+  it('should be able to register a admin', async () => {
+    const { user } = await registerUseCase.execute({
+      name: 'Jhon Doe',
+      email: 'jhon.doe@gmail.com',
+      password: '123456',
+      role: 'ADMIN',
+    })
+
+    expect(user.id).toEqual(expect.any(String))
+    expect(user.role).toEqual('ADMIN')
   })
 
   it('should hash user password upon registration', async () => {

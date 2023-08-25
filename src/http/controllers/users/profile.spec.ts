@@ -25,7 +25,11 @@ describe('Profile (e2e)', () => {
       expect.objectContaining({
         email: 'john.doe@gmail.com',
         name: 'John Doe',
+        role: 'MEMBER',
       }),
+    )
+    expect(profileResponse.body.user).toEqual(
+      expect.not.objectContaining({ password_hash: expect.anything() }),
     )
   })
 })
